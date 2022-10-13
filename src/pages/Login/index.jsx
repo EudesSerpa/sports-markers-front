@@ -1,12 +1,29 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { fieldState } from "../../helpers/form/fieldState";
+import { validations } from "../../helpers/form/validations";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { Input } from "../../components/Input";
+import { Loader } from "../../components/Loader";
+
+const defaultValues = {
+  username: "",
+  password: "",
+};
 
 const Login = () => {
-  const { login, isLogged } = useAuth();
   const navigate = useNavigate();
-  const username = useRef("");
-  const password = useRef("");
+  const { login, isLogged } = useAuth();
+  const {
+    formState: { errors, isSubmitting, isSubmitted },
+    register,
+    getFieldState,
+    handleSubmit,
+  } = useForm({
+    mode: "onBlur",
+    defaultValues,
+  });
 
   useEffect(() => {
     if (isLogged) {
@@ -14,42 +31,47 @@ const Login = () => {
     }
   }, [isLogged]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    login({
-      username: username.current.value,
-      password: password.current.value,
-    });
+  const onSubmit = (data) => {
+    login(data);
   };
+
+  const usernameState = getFieldState("username");
+  const passwordState = getFieldState("password");
 
   return (
     <>
       <h1>Login</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            autoComplete="username"
-            ref={username}
-          />
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
+        <Input
+          label="username"
+          autoComplete="username"
+          register={register}
+          errors={errors}
+          state={fieldState(usernameState, isSubmitted)}
+          isRequired={true}
+          validations={validations.username}
+        />
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            autoComplete="current-password"
-            ref={password}
-          />
-        </div>
+        <Input
+          type="password"
+          label="password"
+          hint="It must be between three (3) and twelve (12) characters"
+          autoComplete="current-password"
+          register={register}
+          errors={errors}
+          state={fieldState(passwordState, isSubmitted)}
+          isRequired={true}
+          validations={validations.password}
+        />
 
-        <button>Login</button>
+        <button className="form__button" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <Loader size="22px" color="var(--on-primary)" />
+          ) : (
+            <span>Login</span>
+          )}
+        </button>
       </form>
     </>
   );

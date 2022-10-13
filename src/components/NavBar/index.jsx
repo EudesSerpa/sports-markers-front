@@ -50,7 +50,7 @@ export const NavBar = () => {
         <div className="header__content wrapper">
           <Link to="/" className="header__logo-container">
             <img
-              src="src/assets/sports_markers_logo.png"
+              src="./src/assets/sports_markers_logo.png"
               alt="Sports Markers logo"
               className="header__logo"
               width="140"
