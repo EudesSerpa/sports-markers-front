@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { fieldState } from "../../helpers/form/fieldState";
@@ -6,6 +6,7 @@ import { validations } from "../../helpers/form/validations";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { Input } from "../../components/Input";
 import { Loader } from "../../components/Loader";
+import Modal from "../../components/Modal";
 
 const defaultValues = {
   username: "",
@@ -14,12 +15,16 @@ const defaultValues = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   const { login, isLogged } = useAuth();
   const {
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
     register,
     getFieldState,
     handleSubmit,
+    reset,
+    setError,
+    clearErrors,
   } = useForm({
     mode: "onBlur",
     defaultValues,
@@ -31,12 +36,31 @@ const Login = () => {
     }
   }, [isLogged]);
 
-  const onSubmit = (data) => {
-    login(data);
+  const onSubmit = async (data) => {
+    try {
+      await login(data);
+      reset(defaultValues);
+    } catch (error) {
+      setError("connection", {
+        type: error.type,
+        message: error.message,
+      });
+    } finally {
+      setShowModal(true);
+
+      setTimeout(() => {
+        setShowModal(false);
+        clearErrors();
+      }, 3000);
+    }
   };
 
   const usernameState = getFieldState("username");
   const passwordState = getFieldState("password");
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -73,6 +97,19 @@ const Login = () => {
           )}
         </button>
       </form>
+
+      {showModal && (
+        <Modal
+          onClose={handleCloseModal}
+          status={isSubmitSuccessful ? "success" : "error"}
+        >
+          <p role="alert">
+            {isSubmitSuccessful
+              ? "Login successfully"
+              : "Error: " + errors.connection.message}
+          </p>
+        </Modal>
+      )}
     </>
   );
 };

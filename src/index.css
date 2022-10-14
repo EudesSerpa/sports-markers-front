@@ -7,6 +7,7 @@
   --secondary-color: #03DAC6;
   --background: #121212;
   --surface: #1f1f1f;
+  --surface-variant: #f2dde1;
   --error: #CF6679;
   --success: #93D13C;
   --shadow: #000000;
@@ -16,6 +17,7 @@
   --on-secondary: #000000;
   --on-background: #F2F2F2;
   --on-surface: #F2F2F2;
+  --on-surface-variant: #514347;
   --on-error: #000000;
 
   /* Emphasis colors: Light text */
@@ -157,6 +159,7 @@ textarea {
   margin: 0 auto;
   font-size: 1.6em;
   border-radius: var(--border-radius);
+  color: var(--on-surface);
   background-color: var(--surface);
   box-shadow:
     -.15em 0 .3em rgba(0, 0, 0, .2),
@@ -186,12 +189,12 @@ textarea {
   display: none;
   font-size: .75em;
   line-height: 1.25;
-  color: var(--on-surface-variant);
 }
 
 .form__hint--example {
   display: inline-block;
   padding: 0 .3em;
+  color: var(--on-surface-variant);
   background-color: var(--surface-variant);
   border-radius: var(--border-radius);
 }

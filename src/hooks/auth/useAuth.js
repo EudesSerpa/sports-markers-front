@@ -1,35 +1,22 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import { UserContext } from "../../context/auth/UserContext";
 import { loginService } from "../../services/login";
 
 export const useAuth = () => {
   const { user, jwt, setUser, setJWT } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   const login = useCallback(
-    ({ username, password }) => {
-      setLoading(true);
+    async ({ username, password }) => {
+      try {
+        const jwt = await loginService({ username, password });
+        window.sessionStorage.setItem("jwt", jwt);
+        setJWT(jwt);
+        setUser({ username });
+      } catch (error) {
+        window.sessionStorage.removeItem("jwt");
 
-      loginService({ username, password })
-        .then((jwt) => {
-          window.sessionStorage.setItem("jwt", jwt);
-          setJWT(jwt);
-          setUser({ username });
-          setError(false);
-        })
-        .catch((error) => {
-          console.error(
-            "🚀 ~ file: useAuth.js ~ line 20 ~ login ~ error",
-            error
-          );
-
-          window.sessionStorage.removeItem("jwt");
-          setError(true);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+        throw new Error(error.message);
+      }
     },
     [setJWT]
   );
@@ -41,8 +28,6 @@ export const useAuth = () => {
 
   return {
     isLogged: Boolean(jwt),
-    isLoginLoading: loading,
-    hasLoginError: error,
     user,
     login,
     logout,

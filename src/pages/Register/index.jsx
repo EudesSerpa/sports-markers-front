@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { fieldState } from "../../helpers/form/fieldState";
@@ -6,6 +7,7 @@ import { registerService } from "../../services/register";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { Input } from "../../components/Input";
 import { Loader } from "../../components/Loader";
+import Modal from "../../components/Modal";
 
 const defaultValues = {
   username: "",
@@ -15,13 +17,16 @@ const defaultValues = {
 
 const Register = () => {
   const navigate = useNavigate();
-  const { login, isLogged, hasLoginError } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+  const { login, hasLoginError } = useAuth();
   const {
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
     register,
     getFieldState,
     handleSubmit,
     reset,
+    setError,
+    clearErrors,
   } = useForm({
     mode: "onBlur",
     defaultValues,
@@ -31,26 +36,40 @@ const Register = () => {
     try {
       const userData = await registerService({ username, password });
       reset(defaultValues);
+
       // Do login automatically
-      /*login(data);
-  
+      login({ username, password });
+
       if (hasLoginError) {
         navigate("/login");
       } else {
         navigate("/");
-      }*/
+      }
     } catch (error) {
-      console.error(error);
+      setError("connection", {
+        type: error.type,
+        message: error.message,
+      });
+    } finally {
+      setShowModal(true);
+
+      setTimeout(() => {
+        setShowModal(false);
+        clearErrors();
+      }, 3000);
     }
   };
 
   const usernameState = getFieldState("username");
   const passwordState = getFieldState("password");
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <h1>Register</h1>
-
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <Input
           label="username"
@@ -91,6 +110,19 @@ const Register = () => {
           )}
         </button>
       </form>
+
+      {showModal && (
+        <Modal
+          onClose={handleCloseModal}
+          status={isSubmitSuccessful ? "success" : "error"}
+        >
+          <p role="alert">
+            {isSubmitSuccessful
+              ? "Register successfully"
+              : "Error: " + errors.connection.message}
+          </p>
+        </Modal>
+      )}
     </>
   );
 };
