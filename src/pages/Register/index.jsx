@@ -68,8 +68,8 @@ const Register = () => {
   };
 
   return (
-    <>
-      <h1>Register</h1>
+    <section className="section__page">
+      <h1 className="section__title">Register</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <Input
           label="username"
@@ -123,7 +123,7 @@ const Register = () => {
           </p>
         </Modal>
       )}
-    </>
+    </section>
   );
 };
 

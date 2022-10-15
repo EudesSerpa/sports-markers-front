@@ -3,7 +3,7 @@ import { UserContext } from "../../context/auth/UserContext";
 import { loginService } from "../../services/login";
 
 export const useAuth = () => {
-  const { user, jwt, setUser, setJWT } = useContext(UserContext);
+  const { jwt, setJWT } = useContext(UserContext);
 
   const login = useCallback(
     async ({ username, password }) => {
@@ -11,10 +11,8 @@ export const useAuth = () => {
         const jwt = await loginService({ username, password });
         window.sessionStorage.setItem("jwt", jwt);
         setJWT(jwt);
-        setUser({ username });
       } catch (error) {
         window.sessionStorage.removeItem("jwt");
-
         throw new Error(error.message);
       }
     },
@@ -28,7 +26,7 @@ export const useAuth = () => {
 
   return {
     isLogged: Boolean(jwt),
-    user,
+    jwt,
     login,
     logout,
   };

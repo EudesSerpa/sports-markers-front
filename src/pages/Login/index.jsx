@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { fieldState } from "../../helpers/form/fieldState";
 import { validations } from "../../helpers/form/validations";
@@ -15,6 +15,7 @@ const defaultValues = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showModal, setShowModal] = useState(false);
   const { login, isLogged } = useAuth();
   const {
@@ -29,10 +30,13 @@ const Login = () => {
     mode: "onBlur",
     defaultValues,
   });
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
+    // Send them back to the page they tried to visit when they were
+    // redirected to the login page.
     if (isLogged) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
   }, [isLogged]);
 
@@ -63,8 +67,8 @@ const Login = () => {
   };
 
   return (
-    <>
-      <h1>Login</h1>
+    <section className="section__page">
+      <h1 className="section__title">Login</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <Input
@@ -110,7 +114,7 @@ const Login = () => {
           </p>
         </Modal>
       )}
-    </>
+    </section>
   );
 };
 

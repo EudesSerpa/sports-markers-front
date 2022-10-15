@@ -119,6 +119,16 @@ textarea {
   margin: 0 auto;
 }
 
+.section__page {
+  padding-block: 2em;
+  /* font-size: 1rem; */
+}
+
+.section__title {
+  font-size: 2.5em;
+  margin-bottom: 1em;
+}
+
 .react-icons {
   font-size: 1.2em;
 }
