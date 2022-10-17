@@ -4,6 +4,7 @@ import { UserProvider } from "./context/auth/UserContext";
 import { Home } from "./pages/Home";
 import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/Auth";
+import { Loader } from "./components/Loader";
 
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
@@ -13,7 +14,7 @@ function App() {
   return (
     <UserProvider>
       <Layout>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader size="44px" color="var(--on-primary)" />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

@@ -119,14 +119,18 @@ textarea {
   margin: 0 auto;
 }
 
-.section__page {
+.section-page {
   padding-block: 2em;
-  /* font-size: 1rem; */
+  font-size: 1.6em;
 }
 
-.section__title {
-  font-size: 2.5em;
+.section-title {
+  font-size: 2.3em;
   margin-bottom: 1em;
+}
+
+.ta-center {
+  text-align: center;
 }
 
 .react-icons {
@@ -167,7 +171,7 @@ textarea {
   min-height: 320px;
   padding: 1em 1.5em;
   margin: 0 auto;
-  font-size: 1.6em;
+  font-size: 1.1em;
   border-radius: var(--border-radius);
   color: var(--on-surface);
   background-color: var(--surface);

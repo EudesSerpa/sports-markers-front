@@ -1,0 +1,19 @@
+.title {
+  position: relative;
+}
+
+.title::after {
+  content: attr(data-title);
+  position: absolute;
+  inset: -.5em 0 0;
+  color: var(--text-medium-emphasis);
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: .15rem;
+  opacity: .2;
+  z-index: -1;
+}
+
+.title--username {
+  color: var(--primary-color);
+}

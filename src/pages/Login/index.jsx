@@ -30,13 +30,15 @@ const Login = () => {
     mode: "onBlur",
     defaultValues,
   });
-  const from = location.state?.from?.pathname || "/";
+  const routeToRedirectOnLogin = "/dashboard";
+  const previousRoute =
+    location.state?.from?.pathname || routeToRedirectOnLogin;
 
   useEffect(() => {
     // Send them back to the page they tried to visit when they were
     // redirected to the login page.
     if (isLogged) {
-      navigate(from, { replace: true });
+      navigate(previousRoute, { replace: true });
     }
   }, [isLogged]);
 
@@ -67,8 +69,8 @@ const Login = () => {
   };
 
   return (
-    <section className="section__page">
-      <h1 className="section__title">Login</h1>
+    <section className="section-page">
+      <h1 className="section-title ta-center">Login</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <Input

@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { ListOfEvents } from "../../components/ListOfEvents";
+import "./index.css";
 
 const Dashboard = () => {
-  const [user, setUser] = useState(null);
   const { jwt } = useAuth();
+  const [user, setUser] = useState(null);
+  const [userEvents, setUserEvents] = useState([]);
 
   useEffect(() => {
     const decodedJWT = jwtDecode(jwt);
@@ -12,10 +15,16 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <section className="section__page">
-      <h1 className="section__title">Dashboard</h1>
+    <section className="section-page">
+      <h1
+        className="section-title title ta-center"
+        data-title={`Welcome, ${user?.username}`}
+      >
+        Welcome,
+        <span className="title--username"> {user?.username}</span>!
+      </h1>
 
-      <p>Welcome, {user?.username}</p>
+      <ListOfEvents events={userEvents} />
     </section>
   );
 };

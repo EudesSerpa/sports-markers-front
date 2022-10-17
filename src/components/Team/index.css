@@ -1,0 +1,19 @@
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+}
+
+.team__title {
+  font-weight: 600;
+  text-align: center;
+}
+
+.team__image {
+  object-fit: cover;
+  width: min(160px, 100%);
+  aspect-ratio: 1;
+  border-radius: .2em;
+}
