@@ -1,8 +1,8 @@
-import { capitalizedWord } from "../../helpers/string/capitalizeWord";
-
 export const Input = ({
   type = "text",
+  name,
   label,
+  list,
   hint,
   autoComplete,
   isRequired = "false",
@@ -11,44 +11,37 @@ export const Input = ({
   errors,
   validations,
 }) => {
-  const formattedLabel = label.includes(" ")
-    ? label.replaceAll(" ", "-").toLowerCase()
-    : label;
-
+  const fieldStateClassName = state ? `form__input--${state}` : "";
   const isCheckboxInputClassName =
     type === "checkbox" ? "form__item--checkbox" : "";
-  const fieldStateClassName = state ? `form__input--${state}` : "";
 
   return (
     <div className={`form__item ${isCheckboxInputClassName}`}>
-      <label htmlFor={formattedLabel} className="form__label">
-        {capitalizedWord(label)}
+      <label htmlFor={name} className="form__label">
+        {label}
       </label>
 
       {hint && (
-        <p id={`${formattedLabel}-hint`} className="form__hint">
+        <p id={`${name}-hint`} className="form__hint">
           <span>Hint: {hint}</span>
         </p>
       )}
 
       {errors && (
-        <p
-          id={`${formattedLabel}-error`}
-          className="form__inline-error"
-          aria-live="off"
-        >
-          {errors[formattedLabel]?.message}
+        <p id={`${name}-error`} className="form__inline-error" aria-live="off">
+          {errors[name]?.message}
         </p>
       )}
 
       <input
-        id={formattedLabel}
+        {...register(name, validations)}
+        id={name}
         type={type}
-        {...register(formattedLabel, validations)}
+        list={list}
         className={`form__input ${fieldStateClassName}`}
         autoComplete={autoComplete}
         aria-required={isRequired}
-        aria-describedby={`${formattedLabel}-error ${formattedLabel}-hint`}
+        aria-describedby={`${name}-error ${name}-hint`}
       />
     </div>
   );

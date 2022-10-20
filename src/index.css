@@ -97,7 +97,8 @@ a {
   color: inherit;
 }
 
-button {
+button,
+.btn {
   padding: 0.6em 1.2em;
   border: 1px solid transparent;
   border-radius: var(--border-radius);
@@ -124,7 +125,7 @@ textarea {
   font-size: 1.6em;
 }
 
-.section-title {
+.section-page__title {
   font-size: 2.3em;
   margin-bottom: 1em;
 }

@@ -1,14 +1,21 @@
 .event,
 .event__body,
-.event__team {
+.event__team,
+.event__footer {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1em;
+  width: 100%;
+}
+
+.event,
+.event__footer {
+  flex-direction: column;
+  gap: .3em;
 }
 
 .event {
-  flex-direction: column;
   gap: .5em;
   width: min(360px, 100%);
   margin: 0 auto;
@@ -47,7 +54,6 @@
 .event__sport {
   width: fit-content;
   padding: .2em .5em;
-  margin: 0 auto .3em;
   color: var(--on-background);
   background-color: var(--background);
   border-radius: var(--border-radius);

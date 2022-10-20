@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getEvents } from "../../services/events/getEvents";
 import { ListOfEvents } from "../../components/ListOfEvents";
 
-const EVENTS_TO_DISPLAY = 12;
+const EVENTS_TO_DISPLAY = 10;
 
 export const Home = () => {
   const [events, setEvents] = useState([]);
@@ -21,7 +21,7 @@ export const Home = () => {
 
   return (
     <section className="section-page">
-      <h1 className="section-title">Main Events</h1>
+      <h1 className="section-page__title">Main Events</h1>
 
       <ListOfEvents events={events} />
     </section>

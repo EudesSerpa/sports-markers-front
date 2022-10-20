@@ -17,3 +17,28 @@
 .title--username {
   color: var(--primary-color);
 }
+
+.section-page__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.3em;
+}
+
+.btn--add-event {
+  align-self: flex-end;
+  display: inline-block;
+  color: var(--on-primary);
+  background-color: var(--primary-color);
+  transition: color .3s ease-in, background-color .3s ease-in;
+}
+
+.btn--add-event:where(:hover, :focus) {
+  color: var(--on-secondary);
+  background-color: var(--secondary-color);
+  box-shadow: 0 .06em .4em var(--shadow);
+}
+
+.btn--add-event:where(:active) {
+  box-shadow: inset 0 .3em .3em var(--shadow);
+}

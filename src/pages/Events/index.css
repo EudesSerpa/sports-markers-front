@@ -1,0 +1,15 @@
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.3em;
+}
+
+.team-fieldset {
+  display: grid;
+  gap: .5em;
+  padding: .8em;
+  border-radius: .3em;
+  border: .15em solid var(--background);
+}

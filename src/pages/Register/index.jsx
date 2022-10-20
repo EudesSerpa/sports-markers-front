@@ -69,10 +69,11 @@ const Register = () => {
 
   return (
     <section className="section-page">
-      <h1 className="section-title ta-center">Register</h1>
+      <h1 className="section-page__title ta-center">Register</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <Input
-          label="username"
+          label="Username"
+          name="username"
           autoComplete="username"
           register={register}
           errors={errors}
@@ -83,7 +84,8 @@ const Register = () => {
 
         <Input
           type="password"
-          label="password"
+          label="Password"
+          name="password"
           hint="It must be between three (3) and twelve (12) characters"
           autoComplete="current-password"
           register={register}
@@ -95,7 +97,8 @@ const Register = () => {
 
         <Input
           type="checkbox"
-          label="accept terms and conditions"
+          label="Accept terms and conditions"
+          name="terms-and-conditions"
           register={register}
           errors={errors}
           isRequired={true}

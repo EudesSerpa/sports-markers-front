@@ -70,11 +70,12 @@ const Login = () => {
 
   return (
     <section className="section-page">
-      <h1 className="section-title ta-center">Login</h1>
+      <h1 className="section-page__title ta-center">Login</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <Input
-          label="username"
+          label="Username"
+          name="username"
           autoComplete="username"
           register={register}
           errors={errors}
@@ -85,7 +86,8 @@ const Login = () => {
 
         <Input
           type="password"
-          label="password"
+          label="Password"
+          name="password"
           hint="It must be between three (3) and twelve (12) characters"
           autoComplete="current-password"
           register={register}

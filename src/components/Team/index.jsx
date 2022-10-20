@@ -4,7 +4,7 @@ export const Team = ({ name, imageURI }) => {
   return (
     <figure className="team">
       <img
-        src={imageURI}
+        src={imageURI || "src/assets/noImage.png"}
         alt={name}
         className="team__image"
         width="130"
