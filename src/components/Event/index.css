@@ -16,6 +16,7 @@
 }
 
 .event {
+  position: relative;
   gap: .5em;
   width: min(360px, 100%);
   margin: 0 auto;
@@ -25,6 +26,27 @@
   color: var(--on-surface);
   background-color: var(--surface);
   box-shadow: .1em .2em .3em var(--shadow);
+}
+
+.event__edit-link {
+  position: absolute;
+  top: -.8em;
+  right: -.8em;
+  display: grid;
+  place-items: center;
+  width: 2.5em;
+  aspect-ratio: 1;
+  padding: 0;
+  border-radius: 50%;
+  border: .3em solid var(--background);
+  color: var(--on-surface);
+  background-color: var(--surface);
+  transition: color .3s ease-in, background-color .3s ease-in;
+}
+
+.event__edit-link:where(:hover, :focus) {
+  color: var(--primary-color);
+  background-color: var(--on-primary);
 }
 
 .event__header {

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { ListOfEvents } from "../../components/ListOfEvents";
-import "./index.css";
 import { getUserEvents } from "../../services/events/getUserEvents";
+import "./index.css";
 
 const Dashboard = () => {
   const { jwt } = useAuth();
@@ -41,11 +41,11 @@ const Dashboard = () => {
       </header>
 
       <div className="section-page__content">
-        <Link to="./create-event" className="btn btn--add-event">
+        <Link to="./create" className="action-link add-event-link">
           Add new event
         </Link>
 
-        <ListOfEvents events={userEvents} />
+        <ListOfEvents events={userEvents} editable={true} />
       </div>
     </section>
   );

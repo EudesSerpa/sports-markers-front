@@ -13,3 +13,18 @@
   border-radius: .3em;
   border: .15em solid var(--background);
 }
+
+.form__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+}
+
+.form__buttons .form__button {
+  margin: 0;
+}
+
+.form__button.form__button--cancel {
+  color: var(--on-surface);
+  background-color: var(--surface);
+}

@@ -6,6 +6,7 @@ import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/Auth";
 import { Loader } from "./components/Loader";
 import CreateEvent from "./pages/Events/createEvent";
+import EditEvent from "./pages/Events/editEvent";
 
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
@@ -23,7 +24,8 @@ function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/create-event" element={<CreateEvent />} />
+              <Route path="/dashboard/create" element={<CreateEvent />} />
+              <Route path="/dashboard/edit/:id" element={<EditEvent />} />
             </Route>
 
             <Route path="*" element={<h1>Not Found Page</h1>} />

@@ -1,10 +1,22 @@
 import { Fragment, memo } from "react";
+import { MdEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { Team } from "../Team";
 import "./index.css";
 
 const RIGHT_SIDE_TEAM = 1;
 
-export const Event = ({ _id = "", name, teams, sport, results, initDate }) => {
+export const Event = ({
+  showEditButton,
+  _id,
+  name,
+  teams,
+  sport,
+  results,
+  initDate,
+}) => {
+  const navigate = useNavigate();
+
   const teamsSection = teams.map(({ name, imageURI }, idx) => {
     const isRightSide = idx === RIGHT_SIDE_TEAM;
     const reverseOrderClassName = isRightSide ? "event__team--left-result" : "";
@@ -23,6 +35,26 @@ export const Event = ({ _id = "", name, teams, sport, results, initDate }) => {
 
   return (
     <article className="event">
+      {showEditButton && (
+        <button
+          onClick={() =>
+            navigate(`./edit/${_id}`, {
+              state: {
+                name,
+                teams,
+                sport,
+                results,
+                initDate,
+              },
+            })
+          }
+          className="event__edit-link"
+          aria-label={`Edit ${name} event`}
+        >
+          <MdEdit />
+        </button>
+      )}
+
       <header className="event__header">
         <h4 className="event__title">{name}</h4>
       </header>
@@ -31,7 +63,7 @@ export const Event = ({ _id = "", name, teams, sport, results, initDate }) => {
 
       <footer className="event__footer">
         <p className="event__sport">{sport.name}</p>
-        <p className="event__date">{initDate.toLocaleString()}</p>
+        <p className="event__date">{initDate}</p>
       </footer>
     </article>
   );

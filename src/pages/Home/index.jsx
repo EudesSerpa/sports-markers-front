@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { getEvents } from "../../services/events/getEvents";
 import { ListOfEvents } from "../../components/ListOfEvents";
 
-const EVENTS_TO_DISPLAY = 10;
+// TODO: Add pagination
+const EVENTS_TO_DISPLAY = 100;
 
 export const Home = () => {
   const [events, setEvents] = useState([]);
