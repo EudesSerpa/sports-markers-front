@@ -1,13 +1,13 @@
 import Event from "../Event";
 import "./index.css";
 
-export const ListOfEvents = ({ events, editable = false }) => {
+export const ListOfEvents = ({ events, editableEvents = false }) => {
   const eventsToDisplay = events.map(
     ({ _id, name, teams, sport, results, initDate }) => (
       <Event
         key={_id}
         _id={_id}
-        showEditButton={editable}
+        showOptions={editableEvents}
         name={name}
         results={results}
         sport={sport}

@@ -138,6 +138,10 @@ textarea {
   font-size: 1.2em;
 }
 
+.react-icons>* {
+  pointer-events: none;
+}
+
 /* Skip link */
 .skip-link {
   display: block;

@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/auth/useAuth";
-import { postEvent } from "../../services/events/postEvent";
-import { getSports } from "../../services/sports/getSports";
-import { getTeams } from "../../services/teams/getTeams";
+import { useUser } from "../../hooks/auth/useUser";
 import { fieldState } from "../../helpers/form/fieldState";
 import { validations } from "../../helpers/form/validations";
+import { getSports } from "../../services/sports/getSports";
+import { getTeams } from "../../services/teams/getTeams";
+import { postTeam } from "../../services/teams/postTeam";
 import { Loader } from "../../components/Loader";
 import { Input } from "../../components/Input";
 import Modal from "../../components/Modal";
 import { Event } from "../../components/Event";
 import "./index.css";
-import { postTeam } from "../../services/teams/postTeam";
 
 const defaultValues = {
   nameEvent: "",
@@ -22,6 +22,7 @@ const defaultValues = {
 
 const CreateEvent = () => {
   const { jwt } = useAuth();
+  const { addEvent } = useUser();
   const navigate = useNavigate();
   const [sports, setSports] = useState([]);
   const [teams, setTeams] = useState([]);
@@ -139,6 +140,7 @@ const CreateEvent = () => {
         initDate,
       };
 
+      // Team creation
       const missingTeams = [];
       eventTeams.forEach((eventTeam) => {
         const alreadyExist = teams.some((team) => team.name === eventTeam.name);
@@ -152,8 +154,7 @@ const CreateEvent = () => {
         createTeam(missingTeams);
       }
 
-      await postEvent({ jwt, eventData });
-
+      await addEvent({ eventData });
       reset(defaultValues);
       navigate("/dashboard", { replace: true });
     } catch (error) {

@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../hooks/auth/useAuth";
 import { getSingleEvent } from "../../services/events/getSingleEvent";
-import { patchEvent } from "../../services/events/patchEvent";
 import { getSports } from "../../services/sports/getSports";
 import { getTeams } from "../../services/teams/getTeams";
 import { fieldState } from "../../helpers/form/fieldState";
@@ -12,6 +10,7 @@ import { Loader } from "../../components/Loader";
 import { Input } from "../../components/Input";
 import Modal from "../../components/Modal";
 import "./index.css";
+import { useUser } from "../../hooks/auth/useUser";
 
 const setDefaultValues = (originData) => ({
   nameEvent: originData.name,
@@ -26,7 +25,7 @@ const setDefaultValues = (originData) => ({
 });
 
 const EditEvent = () => {
-  const { jwt } = useAuth();
+  const { editEvent } = useUser();
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,10 +50,16 @@ const EditEvent = () => {
   useEffect(() => {
     let didCancel = false;
 
-    if (!didCancel) {
-      getTeams({}).then(setTeams);
-      getSports().then(setSports);
+    async function startFetching() {
+      const teams = await getTeams({});
+      const sports = await getSports();
+      if (!didCancel) {
+        setTeams(teams);
+        setSports(sports);
+      }
     }
+
+    startFetching();
 
     return () => {
       didCancel = true;
@@ -62,23 +67,33 @@ const EditEvent = () => {
   }, []);
 
   useEffect(() => {
-    resetDefaultValues();
-  }, []);
-
-  const resetDefaultValues = () => {
     if (location.state) {
       reset(setDefaultValues(location.state));
+      return;
     }
 
-    getSingleEvent({ id })
-      .then((data) => reset(setDefaultValues(data)))
-      .catch((error) => {
+    let didCancel = false;
+
+    async function startFetching() {
+      try {
+        const event = await getSingleEvent({ id });
+        if (!didCancel) {
+          reset(setDefaultValues(event));
+        }
+      } catch (error) {
         setError("connection", {
           type: error.type,
           message: error.message,
         });
-      });
-  };
+      }
+    }
+
+    startFetching();
+
+    return () => {
+      didCancel = true;
+    };
+  }, [sports]);
 
   const sportsToSelect = useCallback(() => {
     return sports.map(({ name }) => (
@@ -113,7 +128,7 @@ const EditEvent = () => {
         initDate: data.initDate,
       };
 
-      await patchEvent({ jwt, id, eventData });
+      await editEvent({ id, eventData });
       reset();
       navigate("/dashboard", { replace: true });
     } catch (error) {
@@ -239,13 +254,13 @@ const EditEvent = () => {
         />
 
         <div className="form__buttons">
-          <button
+          <Link
+            to={-1}
             className="form__button form__button--cancel"
             disabled={isSubmitting}
-            onClick={() => navigate(-1)}
           >
             <span>Cancel</span>
-          </button>
+          </Link>
           <button className="form__button" disabled={isSubmitting}>
             {isSubmitting ? (
               <Loader size="22px" color="var(--on-primary)" />
@@ -264,7 +279,7 @@ const EditEvent = () => {
           <p role="alert">
             {isSubmitSuccessful
               ? "Event edited successfully"
-              : "Error: " + errors.connection?.message}
+              : "Error: " + errors.connection.message}
           </p>
         </Modal>
       )}

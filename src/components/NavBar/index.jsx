@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdLogin, MdLogout } from "react-icons/md";
 import { NavBarItem } from "./Item";
+import logo from "../../assets/sports_markers_logo.png";
 import "./index.css";
 
 export const NavBar = () => {
@@ -50,7 +51,7 @@ export const NavBar = () => {
         <div className="header__content wrapper">
           <Link to="/" className="header__logo-container">
             <img
-              src="src/assets/sports_markers_logo.png"
+              src={logo}
               alt="Sports Markers logo"
               className="header__logo"
               width="140"

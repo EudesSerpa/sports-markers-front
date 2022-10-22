@@ -1,7 +1,8 @@
 .event,
 .event__body,
 .event__team,
-.event__footer {
+.event__footer,
+.event-modal {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +11,13 @@
 }
 
 .event,
-.event__footer {
+.event__footer,
+.event-modal {
   flex-direction: column;
+}
+
+.event,
+.event__footer {
   gap: .3em;
 }
 
@@ -20,18 +26,21 @@
   gap: .5em;
   width: min(360px, 100%);
   margin: 0 auto;
-  padding: .4em .8em;
-  font-size: 1.1em;
+  padding: .6em .8em .4em;
+  font-size: 1.05em;
   border-radius: var(--border-radius);
   color: var(--on-surface);
   background-color: var(--surface);
   box-shadow: .1em .2em .3em var(--shadow);
 }
 
-.event__edit-link {
+.event--with-options {
+  padding-top: 1em;
+}
+
+.event__options {
   position: absolute;
   top: -.8em;
-  right: -.8em;
   display: grid;
   place-items: center;
   width: 2.5em;
@@ -44,9 +53,22 @@
   transition: color .3s ease-in, background-color .3s ease-in;
 }
 
-.event__edit-link:where(:hover, :focus) {
+.event__options--delete {
+  right: 1.8em;
+}
+
+.event__options--edit {
+  right: -.8em;
+}
+
+.event__options:where(:hover, :focus) {
   color: var(--primary-color);
   background-color: var(--on-primary);
+}
+
+.event__options:where(:hover, :focus).event__options--delete {
+  color: var(--on-error);
+  background-color: var(--error);
 }
 
 .event__header {
@@ -84,4 +106,27 @@
 
 .event__date {
   font-size: .95em;
+}
+
+/* Event - Modal  */
+.event-modal__text,
+.event-modal__button {
+  font-size: .9em;
+}
+
+.event-modal__buttons {
+  align-self: flex-end;
+  display: flex;
+  gap: .5em;
+}
+
+.event-modal__button {
+  padding: .5em;
+  color: var(--on-surface);
+  background-color: var(--surface);
+}
+
+.event-modal__button--delete {
+  color: var(--on-error);
+  background-color: var(--error);
 }
