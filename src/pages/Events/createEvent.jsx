@@ -6,6 +6,7 @@ import { useUser } from "../../hooks/auth/useUser";
 import { fieldState } from "../../helpers/form/fieldState";
 import { validations } from "../../helpers/form/validations";
 import { getSports } from "../../services/sports/getSports";
+import { postSport } from "../../services/sports/postSport";
 import { getTeams } from "../../services/teams/getTeams";
 import { postTeam } from "../../services/teams/postTeam";
 import { Loader } from "../../components/Loader";
@@ -110,24 +111,26 @@ const CreateEvent = () => {
     }
   }, [watchAllFields["team-2"]]);
 
-  const createTeam = (missingTeams) => {
+  const createTeams = (missingTeams) => {
     const promises = missingTeams.map(async (teamData) => {
       return await postTeam({ jwt, teamData });
     });
 
-    Promise.all(promises)
-      .then((data) => {
-        console.log(
-          "🚀 ~ file: createEvent.jsx ~ line 118 ~ Promise.all ~ creating team ~ data",
-          data
-        );
-      })
-      .catch((error) => {
-        console.log(
-          "🚀 ~ file: createEvent.jsx ~ line 120 ~ Promise.all ~ creating team ~ error",
-          error
-        );
-      });
+    Promise.all(promises).catch((error) => {
+      console.log(
+        "🚀 ~ file: createEvent.jsx ~ line 120 ~ Promise.all ~ creating team ~ error",
+        error
+      );
+    });
+  };
+
+  const createSport = (sportData) => {
+    postSport({ jwt, sportData }).catch((error) => {
+      console.log(
+        "🚀 ~ file: createEvent.jsx ~ line 129 ~ createSport ~ error",
+        error
+      );
+    });
   };
 
   const onSubmit = async (data) => {
@@ -140,7 +143,7 @@ const CreateEvent = () => {
         initDate,
       };
 
-      // Team creation
+      // Teams creation
       const missingTeams = [];
       eventTeams.forEach((eventTeam) => {
         const alreadyExist = teams.some((team) => team.name === eventTeam.name);
@@ -151,7 +154,16 @@ const CreateEvent = () => {
       });
 
       if (missingTeams.length) {
-        createTeam(missingTeams);
+        createTeams(missingTeams);
+      }
+
+      // Sport creation
+      const alreadyExist = sports.some(
+        (eventSport) => eventSport.name === sport.name
+      );
+
+      if (!alreadyExist) {
+        createSport(sport);
       }
 
       await addEvent({ eventData });
