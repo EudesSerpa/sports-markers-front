@@ -21,6 +21,7 @@ const defaultValues = {
   sport: "",
 };
 
+// TODO: Separate concerns (teams, sports, modals, form fields)
 const CreateEvent = () => {
   const { jwt } = useAuth();
   const { addEvent } = useUser();

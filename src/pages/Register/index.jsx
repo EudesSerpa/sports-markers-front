@@ -43,7 +43,7 @@ const Register = () => {
       if (hasLoginError) {
         navigate("/login");
       } else {
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
       setError("connection", {
@@ -102,7 +102,7 @@ const Register = () => {
           register={register}
           errors={errors}
           isRequired={true}
-          validations={validations.termsAndConditions}
+          validations={validations["terms-and-conditions"]}
         />
 
         <button className="form__button" disabled={isSubmitting}>
