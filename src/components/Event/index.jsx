@@ -97,7 +97,7 @@ export const Event = ({
 
         <footer className="event__footer">
           <p className="event__sport">{sport.name}</p>
-          <p className="event__date">{initDate}</p>
+          <p className="event__date">{new Date(initDate).toLocaleString()}</p>
         </footer>
       </article>
 

@@ -5,12 +5,12 @@ import { Home } from "./pages/Home";
 import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/Auth";
 import { Loader } from "./components/Loader";
-import CreateEvent from "./pages/Events/createEvent";
-import EditEvent from "./pages/Events/editEvent";
 
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const CreateEvent = lazy(() => import("./pages/Events/createEvent"));
+const EditEvent = lazy(() => import("./pages/Events/editEvent"));
 
 function App() {
   return (

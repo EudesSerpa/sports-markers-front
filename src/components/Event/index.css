@@ -6,7 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1em;
   width: 100%;
 }
 
@@ -21,9 +20,13 @@
   gap: .3em;
 }
 
+.event__body,
+.event__team {
+  gap: .7em;
+}
+
 .event {
   position: relative;
-  gap: .5em;
   width: min(360px, 100%);
   margin: 0 auto;
   padding: .6em .8em .4em;
@@ -108,7 +111,11 @@
   font-size: .95em;
 }
 
-/* Event - Modal  */
+/* Event - Modal - Delete option */
+.event-modal {
+  gap: 1em;
+}
+
 .event-modal__text,
 .event-modal__button {
   font-size: .9em;

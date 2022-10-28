@@ -8,8 +8,8 @@ export const Team = ({ name, imageURI }) => {
         src={imageURI || fallbackImage}
         alt={`${name} image`}
         className="team__image"
-        width="130"
-        height="130"
+        width="110"
+        height="110"
       />
 
       <figcaption className="team__details">

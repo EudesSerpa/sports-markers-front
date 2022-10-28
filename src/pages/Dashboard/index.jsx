@@ -3,6 +3,7 @@ import { useUser } from "../../hooks/auth/useUser";
 import { ListOfEvents } from "../../components/ListOfEvents";
 import "./index.css";
 
+// TODO: Add pagination
 const Dashboard = () => {
   const { getUser, events } = useUser();
 
