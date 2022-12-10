@@ -18,6 +18,8 @@ This project makes use of the MongoDB database to store the data of users, event
 
 This project is deployed in Vercel: [See demo](https://sports-markers.vercel.app/)
 
+[Mockup project](./public/mockups_sports-markers.png)
+
 ## Installation
 
 To use the project locally:
