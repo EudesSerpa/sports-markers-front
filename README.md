@@ -24,7 +24,7 @@ To use the project locally:
 
 1. Clone the repository on your local machine: 
 ```bash
-git clone https://github.com/user/repo.git
+git clone https://github.com/EudesSerpa/sports-markers-front.git
 ```
 
 2. Change directory:
